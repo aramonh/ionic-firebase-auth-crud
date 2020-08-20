@@ -28,6 +28,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/edit-post/edit-post.module').then( m => m.EditPostPageModule)
   },
   {
+    path: 'add-aeroline',
+    loadChildren: () => import('./pages/add-aeroline/add-aeroline.module').then( m => m.AddAerolinePageModule)
+  },
+  {
+    path: 'edit-aeroline/:id',
+    loadChildren: () => import('./pages/edit-aeroline/edit-aeroline.module').then( m => m.EditAerolinePageModule)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'

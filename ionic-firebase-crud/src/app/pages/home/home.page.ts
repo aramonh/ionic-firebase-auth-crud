@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  posts: any;
+  aerolines: any;
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
@@ -30,14 +30,14 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.getPosts();
+    this.getAerolines();
   }
 
   salir(){
     this.authCtrl.signOut();
   }
 
-  async getPosts() {
+  async getAerolines() {
     // show loader
     const loader = this.loadingCtrl.create({
       message: 'Please wait...',
@@ -45,18 +45,22 @@ export class HomePage implements OnInit {
     (await loader).present();
     try {
       this.firestore
-        .collection('posts')
+        .collection('aerolines')
         .snapshotChanges()
         .subscribe((data) => {
           // console.log(data);
-          this.posts = data.map((e) => {
+          this.aerolines = data.map((e) => {
             // console.log('map data', e);
             return {
               id: e.payload.doc.id,
               // tslint:disable-next-line: no-string-literal
-              title: e.payload.doc.data()['title'],
+              name: e.payload.doc.data()['name'],
+              // tslint:disable-next-line: no-string-literal
+              location: e.payload.doc.data()['location'],
               // tslint:disable-next-line: no-string-literal
               details: e.payload.doc.data()['details'],
+              // tslint:disable-next-line: no-string-literal
+              airplanes: e.payload.doc.data()['airplanes'],
             };
           });
         });
@@ -67,7 +71,7 @@ export class HomePage implements OnInit {
     (await loader).dismiss();
   }
 
-  async deletePost(id: string) {
+  async deleteAeroline(id: string) {
     // show loader
     console.log('Delete', id);
     const loader = this.loadingCtrl.create({
@@ -75,8 +79,8 @@ export class HomePage implements OnInit {
     });
     (await loader).present();
     try {
-     // await this.firestore.doc('posts' + id).delete();
-    await this.firestore.collection('posts').doc(id).delete();
+     // await this.firestore.doc('aerolines' + id).delete();
+    await this.firestore.collection('aerolines').doc(id).delete();
     } catch (er) {
       this.showToast(er);
     }
@@ -88,7 +92,7 @@ export class HomePage implements OnInit {
     this.toastCtrl
       .create({
         message,
-        duration: 2000,
+        duration: 3000,
       })
       .then((toastData) => toastData.present());
   }

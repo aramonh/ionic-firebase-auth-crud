@@ -1,0 +1,35 @@
+<ion-header color="dark">
+  <ion-toolbar color="dark">
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Aeroline</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-item>
+    <ion-label position="floating">Name of Aeroline</ion-label>
+    <ion-input [(ngModel)]="aeroline.name" type="text" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Location of Aeroline</ion-label>
+    <ion-input [(ngModel)]="aeroline.location" type="text" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Details of Aeroline</ion-label>
+    <ion-input [(ngModel)]="aeroline.details" type="text" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Number of Airplanes</ion-label>
+    <ion-input [(ngModel)]="aeroline.airplanes" type="number" required></ion-input>
+  </ion-item>
+
+  <ion-button  color="dark" (click)="updateAeroline(aeroline)" class="ion-padding" expand="full" fill="solid" shape="round">
+    Update
+  </ion-button>
+</ion-content>

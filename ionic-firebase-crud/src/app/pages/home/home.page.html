@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="dark">
     <ion-title>
       Home
     </ion-title>
@@ -11,43 +11,48 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
- <h1 text-center>Swipe to interact </h1>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/add-post" >
-      <ion-icon name="add"></ion-icon>
+<ion-content  class="ion-no-padding" [fullscreen]="true" >
+  <ion-fab color="dark" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" routerLink="/add-aeroline">
+      <ion-icon  name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-
-  <ion-list lines="none">
-      <ion-item-sliding class="mx-auto" text-center *ngFor="let post of posts" >
-
-        <ion-item class="ion-no-padding">
-          <ion-label text-center>
-            <h2>{{post.title}}</h2>
-            <p>{{post.details}}</p>
-          </ion-label>
-        </ion-item>
-
-
-        <ion-item-options side="start">
-          <ion-item-option [routerLink]="['/edit-post/', post.id ]" >
-            <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
+ 
+        <h1>Swipe to interact</h1>
+        <ion-list  #lista lines="none">
+                <ion-item-sliding
+                color = "dark"
+                *ngFor="let aeroline of aerolines"
+              >
+           
     
-        <ion-item-options side="end">
-          <ion-item-option (click)="deletePost(post.id)" color="danger" >
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
+                <ion-item color="dark">
+    
+                     <ion-label ><span>Location:{{aeroline.location}}</span> </ion-label>
+                     <ion-label>Aeroline:{{aeroline.name}}</ion-label>
+                      <ion-label >details:<p>{{aeroline.details}}</p></ion-label>
+                      
+                      <ion-label  text-right>Airplanes Availables:<strong>{{aeroline.airplanes}}</strong></ion-label
+                      >
         
-
-        
-
-      </ion-item-sliding>
-    </ion-list>
-
-
+                </ion-item>
+    
+                <ion-item-options side="start">
+                  <ion-item-option [routerLink]="['/edit-aeroline/', aeroline.id ]">
+                    <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+    
+                <ion-item-options side="end">
+                  <ion-item-option
+                    (click)="deleteAeroline(aeroline.id)"
+                    color="danger"
+                  >
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+        </ion-list>
+   
 </ion-content>

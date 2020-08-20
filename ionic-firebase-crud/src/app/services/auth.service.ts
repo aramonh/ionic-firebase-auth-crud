@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
 import {
   NavController,
   ToastController,
   LoadingController,
 } from '@ionic/angular';
 import { User } from '../interfaces/interfaces';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +34,47 @@ export class AuthService {
     } catch (err) {
       this.showToast(err);
     }
+  }
+
+
+  async loginFacebook() {
+    // show loader
+    const loader = this.loadingCtrl.create({
+      message: 'Please wait..',
+    });
+    (await loader).present();
+
+
+    try {
+
+     const provider = new firebase.auth.FacebookAuthProvider();
+     await this.loginWithSocial(provider);
+
+    }catch (er) {
+      this.showToast(er);
+    }
+
+    (await loader).dismiss();
+  }
+
+  async loginGoogle() {
+    // show loader
+    const loader = this.loadingCtrl.create({
+      message: 'Please wait..',
+    });
+    (await loader).present();
+
+
+    try {
+
+     const provider = new firebase.auth.GoogleAuthProvider();
+     await this.loginWithSocial(provider);
+
+    }catch (er) {
+      this.showToast(er);
+    }
+
+    (await loader).dismiss();
   }
 
   async login(user: User) {
@@ -86,6 +129,30 @@ export class AuthService {
       })
       .then((toastData) => toastData.present());
   }
+
+
+  private async loginWithSocial(provider: any){
+    await this.afAuth.signInWithPopup(provider).then( result => {
+      console.log(result);
+      const token = result.credential["accessToken"];
+      console.log('google token', token);
+      // The signed-in user info.
+      const user = result.user;
+    // tslint:disable-next-line: align
+      this.setTokentoHeader();
+
+      this.navCtrl.navigateRoot('home');
+    }).catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      const email = error.email;
+
+      const credential = error.credential;
+      this.showToast(error);
+    });
+  }
+
 
   private async setTokentoHeader() {
     try {

@@ -28,10 +28,18 @@ async onLogin(user: User ){
   console.log(user);
   if (this.formValidation()){
    try {
-     this.authCtrl.login(user);
+    await this.authCtrl.login(user);
    } catch (er) {
      this.showToast(er);
    }
+  }
+}
+
+async onLoginGoogle(){
+  try {
+    await this.authCtrl.loginGoogle();
+  } catch (error) {
+    this.showToast(error);
   }
 }
 
